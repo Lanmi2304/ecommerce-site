@@ -3,6 +3,12 @@ import React, { createContext, useState, useEffect } from 'react';
 // create context
 export const CartContext = createContext();
 
+export const CART_ITEMS_LS_KEY = 'cartItems';
+
+export const updateCartLS = (newCartItems) => {
+  localStorage.setItem(CART_ITEMS_LS_KEY, JSON.stringify(newCartItems));
+};
+
 const CartProvider = ({ children }) => {
   // cart state
   const [cart, setCart] = useState([]);
@@ -16,7 +22,7 @@ const CartProvider = ({ children }) => {
       return accumulator + currentItem.price * currentItem.amount;
     }, 0);
     setTotal(total);
-  });
+  }, []);
 
   // update item amount
   useEffect(() => {
@@ -44,6 +50,7 @@ const CartProvider = ({ children }) => {
           return item;
         }
       });
+      updateCartLS(newCart);
       setCart(newCart);
     } else {
       setCart([...cart, newItem]);
