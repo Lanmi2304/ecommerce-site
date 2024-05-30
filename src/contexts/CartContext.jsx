@@ -1,9 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 // create context
 export const CartContext = createContext();
 
-export const CART_ITEMS_LS_KEY = 'cartItems';
+export const CART_ITEMS_LS_KEY = "cartItems";
 
 export const updateCartLS = (newCartItems) => {
   localStorage.setItem(CART_ITEMS_LS_KEY, JSON.stringify(newCartItems));
@@ -22,7 +22,7 @@ const CartProvider = ({ children }) => {
       return accumulator + currentItem.price * currentItem.amount;
     }, 0);
     setTotal(total);
-  }, []);
+  }, [cart]);
 
   // update item amount
   useEffect(() => {
