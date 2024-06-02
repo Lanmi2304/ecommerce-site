@@ -17,7 +17,7 @@ const Header = () => {
     //   window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
     // });
 
-    window.addEventListener("scroll", () => {
+    const scrollHandler = () => {
       const newScroll = window.scrollY;
       setCurrentScroll(window.scrollY);
 
@@ -26,9 +26,10 @@ const Header = () => {
       } else {
         setIsActive(true);
       }
-    });
+    };
+    window.addEventListener("scroll", scrollHandler);
 
-    return () => window.removeEventListener("scroll");
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, [currentScroll]);
 
   return (
