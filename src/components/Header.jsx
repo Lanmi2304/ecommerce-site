@@ -16,11 +16,22 @@ const Header = () => {
 
   // event listener
   useEffect(() => {
+    // window.addEventListener("scroll", () => {
+    //   window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
+    // });
+
     window.addEventListener("scroll", () => {
-      window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
+      setCurrentWindowScroll(window.scrollY);
+      const newWindowScroll = window.scrollY;
+      if (currentWindowScroll > newWindowScroll) {
+        setIsActive(true);
+      } else {
+        setIsActive(false);
+      }
     });
-    console.log(currentWindowScroll);
-  }, []);
+
+    return () => window.removeEventListener("scroll");
+  }, [currentWindowScroll]);
 
   return (
     <header
