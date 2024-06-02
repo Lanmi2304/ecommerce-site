@@ -11,22 +11,24 @@ const Header = () => {
   const [currentScroll, setCurrentScroll] = useState(window.currentScroll);
   const { isOpen, setIsOpen } = useContext(SidebarContext);
   const { itemAmount } = useContext(CartContext);
+
   // event listener
   useEffect(() => {
-    // window.addEventListener("scroll", () => {
-    //   window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
-    // });
+    let prevScroll = window.scrollY;
 
     const scrollHandler = () => {
       const newScroll = window.scrollY;
-      setCurrentScroll(window.scrollY);
+      setCurrentScroll(newScroll);
 
-      if (currentScroll > newScroll) {
+      if (prevScroll > newScroll) {
         setIsActive(false);
       } else {
         setIsActive(true);
       }
+
+      prevScroll = newScroll;
     };
+
     window.addEventListener("scroll", scrollHandler);
 
     return () => window.removeEventListener("scroll", scrollHandler);
