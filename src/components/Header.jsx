@@ -1,30 +1,44 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { SidebarContext } from '../contexts/SidebarContext';
-import { CartContext } from '../contexts/CartContext';
-import { BsBag } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import Logo from '../img/logo.svg';
+import React, { useContext, useEffect, useState } from "react";
+import { SidebarContext } from "../contexts/SidebarContext";
+import { CartContext } from "../contexts/CartContext";
+import { BsBag } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import Logo from "../img/logo.svg";
 
 const Header = () => {
   // header state
   const [isActive, setIsActive] = useState(false);
+  const [currentScroll, setCurrentScroll] = useState(window.currentScroll);
   const { isOpen, setIsOpen } = useContext(SidebarContext);
   const { itemAmount } = useContext(CartContext);
   // event listener
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
+    // window.addEventListener("scroll", () => {
+    //   window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
+    // });
+
+    window.addEventListener("scroll", () => {
+      const newScroll = window.scrollY;
+      setCurrentScroll(window.scrollY);
+
+      if (currentScroll > newScroll) {
+        setIsActive(false);
+      } else {
+        setIsActive(true);
+      }
     });
-  }, []);
+
+    return () => window.removeEventListener("scroll");
+  }, [currentScroll]);
 
   return (
     <header
       className={`${
-        isActive ? 'bg-white py-4 shadow-md' : 'bg-none py-6'
+        isActive ? "bg-white py-4 shadow-md" : "bg-none py-6"
       } fixed w-full z-10 transition-all`}
     >
       <div className="container mx-auto flex items-center justify-between h-full">
-        <Link to={'/'}>
+        <Link to={"/"}>
           <div>
             <img className="w-[40px]" src={Logo} alt="" />
           </div>
